@@ -11,4 +11,8 @@ The output of the search will give you the top searches based on the phrase. For
 {'name': 'The Three-Body Problem', 'description': 'Humans encounter an alien civilization that lives in a dying system.', 'author': 'Liu Cixin', 'year': 2008} score: 0.4590293503775251
 ```
 
-The ne
+The second example is query that narrows down the results by searching only in the 2000s and should return:
+
+```
+{'name': 'The Three-Body Problem', 'description': 'Humans encounter an alien civilization that lives in a dying system.', 'author': 'Liu Cixin', 'year': 2008} score: 0.4590293503775251
+```
