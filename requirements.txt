@@ -1,2 +1,4 @@
 qdrant_client
 sentence_transformers
+black
+ruff

@@ -6,7 +6,7 @@ from sentence_transformers import SentenceTransformer
 encoder = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Opening JSON file
-f = open('books_data.json')
+f = open("data.json")
 
 documents = json.load(f)
 qdrant = QdrantClient(":memory:")
@@ -30,10 +30,10 @@ qdrant.upload_records(
 )
 
 # Read search file
-data = open("search.txt", 'r').read()
+data = open("search.txt", "r").read()
 
 # Replacing all occurrences of newline in data with ''
-search_data = data.replace('\n', '')
+search_data = data.replace("\n", "")
 
 # Search data using search input
 hits = qdrant.search(
