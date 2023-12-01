@@ -4,4 +4,3 @@ sentence-transformers==2.2.2
 streamlit
 nltk
 black
-ruff

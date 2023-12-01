@@ -9,7 +9,7 @@ from sentence_transformers import SentenceTransformer
 # Search Predictions
 def search(search_txt):
     encoder = SentenceTransformer("all-MiniLM-L6-v2")
-    qdrant = QdrantClient("http://localhost:6333")
+    qdrant = QdrantClient("http://172.17.0.1:6333")
 
     # Search data using search input
     hits = qdrant.search(

@@ -1,21 +1,9 @@
 # semantic-search
-Use vector database qdrant to setup semantic search on dataset. Install the requirements file to install dependencies. For this we will walkthrough two examples. One example will be using book dataset and the second example will be using a much large wikipedia summary dataset. Both examples take advantage of a pre-trained model called all-MiniLM-L6-v2 which will transform sentences to vector space so that it can be used for the semantic search.
+Use vector database qdrant to setup semantic search on dataset. For this we will walkthrough an example using a large wikipedia summary dataset. This examples takes advantage of a pre-trained model called all-MiniLM-L6-v2 which will transform sentences to vector space so that it can be used for the semantic search. The web app will take a search prompt and use that to return the suggested wiki article to read. Below is an example of the application that was deployed to kubernetes on GCP using terraform.
 
-In the search.txt file update the phrase for search that needs to be used for the semantic search. The data to search agains should go in the data.json file.
+![webapp example](https://raw.githubusercontent.com/jbrcoleman/semantic-search/main/luigi_streamlit.PNG)
 
-The output of the search will give you the top searches based on the phrase. For example searching for the phrase alien invasion with the book data given in the example will create the output below:
-
-```
-{'name': 'The War of the Worlds', 'description': 'A Martian invasion of Earth throws humanity into chaos.', 'author': 'H.G. Wells', 'year': 1898} score: 0.5700933246392614
-{'name': "The Hitchhiker's Guide to the Galaxy", 'description': 'A comedic science fiction series following the misadventures of an unwitting human and his alien friend.', 'author': 'Douglas Adams', 'year': 1979} score: 0.5040468254505261
-{'name': 'The Three-Body Problem', 'description': 'Humans encounter an alien civilization that lives in a dying system.', 'author': 'Liu Cixin', 'year': 2008} score: 0.4590293503775251
-```
-
-The second example is query that narrows down the results by searching only in the 2000s and should return:
-
-```
-{'name': 'The Three-Body Problem', 'description': 'Humans encounter an alien civilization that lives in a dying system.', 'author': 'Liu Cixin', 'year': 2008} score: 0.4590293503775251
-```
+The first part will talk about the setup of getting the wiki data into qdrant and buidling the streamlit app. The second part will focus on the terraform deployment of the apps to Kubernetes on GCP. 
 
 ## Wikipedia Summary Dataset
 
@@ -53,6 +41,20 @@ Finally we can search the wiki dataset using search.py. Here we will search for 
   }
 ```
 
+## Deployment
+For this deployment I used terraform to deploy the applications to GKE on GCP. The wiki qdrant db container and the web app container were placed in the same pod and the web app is exposed as service. 
+
+Apply terraform infrastucture for GCP
+`terraform apply`
+
+Apply Pod and Service
+
+`kubectl apply -f wiki-qdrant-app.yaml`
+
+`kubectl apply -f wiki-qdrant-service.yaml`
+
+
 ## Future Improvements
-- Upload data using Rust client
-- Serve model for inference
+- Upload data using Rust client to improve speed of data indexing
+- Seperate db and web app into different pods
+- Do load testing and find ways to improve query speed

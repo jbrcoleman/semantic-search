@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: semantic-search
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: semantic-search
+  template:
+    metadata:
+      labels:
+        app: semantic-search
+    spec:
+      containers:
+      - name: qdrant
+        image: us-central1-docker.pkg.dev/gothic-welder-398814/qdrant-wiki/summary:latest
+        ports:
+        - containerPort: 6333
+      - name: wiki-app
+        image: us-central1-docker.pkg.dev/gothic-welder-398814/qdrant-wiki/web-app:latest
+        ports:
+        - containerPort: 8501
