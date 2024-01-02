@@ -4,6 +4,3 @@ install:
 
 format:	
 	black *.py 
-
-lint:
-	ruff check *.py mylib/*.py
